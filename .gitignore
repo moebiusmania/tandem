@@ -1,0 +1,8 @@
+node_modules
+data/
+*.sqlite
+*.sqlite-*
+coverage/
+public/vendor/
+.env
+dist/

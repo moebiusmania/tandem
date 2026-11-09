@@ -1,0 +1,71 @@
+services:
+  app:
+    build: .
+    image: tandem:local
+    restart: unless-stopped
+    init: true
+    ports:
+      # Bind to a private-network IP (set TANDEM_BIND in .env) so only the reverse
+      # proxy can reach it; the default keeps it on loopback.
+      - "${TANDEM_BIND:-127.0.0.1}:${TANDEM_PORT:-3203}:3000"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "3000"
+      DATABASE_PATH: /app/data/tandem.sqlite
+      HOME: /tmp
+      TMPDIR: /tmp
+      TZ: UTC
+      BUN_RUNTIME_TRANSPILER_CACHE_PATH: "0"
+      # TLS ends at the reverse proxy, so the browser sees HTTPS: Secure/__Host- cookies and HSTS stay on.
+      COOKIE_SECURE: "true"
+      HSTS: "true"
+      # The public https:// origin. Form posts carry it in the Origin header, which differs from
+      # the plain-HTTP origin the app sees, so it must be allowed explicitly.
+      ALLOWED_ORIGINS: ${TANDEM_PUBLIC_URL:?set TANDEM_PUBLIC_URL in .env to the public https:// URL}
+      # Use X-Forwarded-For from the proxy for the per-IP login throttle. Safe only because the
+      # port is reachable from the private network alone (see TANDEM_BIND).
+      TRUST_PROXY: ${TANDEM_TRUST_PROXY:-true}
+    volumes:
+      - data:/app/data
+    user: "65532:65532"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 100
+    # argon2id uses ~19 MiB per hash; this leaves room for a few concurrent sign-ins.
+    mem_limit: 256m
+    memswap_limit: 256m
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 2048
+    cpus: "1.0"
+    stop_grace_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/bun", "-e", "fetch('http://127.0.0.1:3000/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - app
+
+volumes:
+  data:
+
+networks:
+  app:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${TANDEM_SUBNET:-172.30.0.0/24}

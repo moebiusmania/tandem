@@ -1,0 +1,28 @@
+{
+  "name": "tandem",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "postinstall": "bun scripts/vendor.ts",
+    "dev": "NODE_ENV=development HOST=0.0.0.0 bun --watch src/index.ts",
+    "start": "NODE_ENV=production bun src/index.ts",
+    "user:create": "bun scripts/create-user.ts",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "typecheck": "bun check",
+    "icons": "bun scripts/icons.ts"
+  },
+  "dependencies": {
+    "@alpinejs/csp": "^3.17.5",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/space-grotesk": "^5.3.0",
+    "hono": "^4.13.17",
+    "htmx.org": "^2.0.11",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@happy-dom/global-registrator": "^21.0.4",
+    "@types/bun": "latest"
+  }
+}
