@@ -172,3 +172,25 @@ describe("static assets", () => {
     expect(app).toBeInstanceOf(Hono);
   });
 });
+
+describe("social share meta", () => {
+  const meta = (html: string, prop: string) => html.match(new RegExp(`<meta (?:property|name)="${prop}" content="([^"]*)"`))?.[1];
+  test("og:image uses the configured public origin", async () => {
+    const html = await (await new Client(setup({ allowedOrigins: ["https://tandem.example.com"] })).get("/login")).text();
+    expect(meta(html, "og:image")).toBe("https://tandem.example.com/static/og.png");
+    expect(meta(html, "twitter:card")).toBe("summary_large_image");
+    expect(meta(html, "og:title")).toBe("Tandem");
+  });
+  test("og:image falls back to the request origin", async () => {
+    const html = await (await new Client(setup()).get("/login")).text();
+    expect(meta(html, "og:image")).toMatch(/^https?:\/\/[^/]+\/static\/og\.png$/);
+  });
+  test("the image is served", async () => {
+    const res = await setup().app.request("/static/og.png");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("image/png");
+    expect(res.headers.get("cross-origin-resource-policy")).toBe("cross-origin");
+    const css = await setup().app.request("/static/css/app.css");
+    expect(css.headers.get("cross-origin-resource-policy")).toBe("same-origin");
+  });
+});

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Tandem hero / social card (1200×630). Rendered to public/og.png; colours are the app's dark tokens. -->
+  <defs>
+    <radialGradient id="glowLime" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(250 90) scale(520)">
+      <stop offset="0" stop-color="#C6F432" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#C6F432" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowViolet" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1010 560) scale(560)">
+      <stop offset="0" stop-color="#A99BFF" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#A99BFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cardEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#343744"/>
+      <stop offset="1" stop-color="#23252E"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="24" stdDeviation="26" flood-color="#000" flood-opacity=".55"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0E0F13"/>
+  <rect width="1200" height="630" fill="url(#glowLime)"/>
+  <rect width="1200" height="630" fill="url(#glowViolet)"/>
+
+  <!-- Left: logo, wordmark, tagline -->
+  <g transform="translate(92 150) scale(3.4)">
+    <circle cx="11" cy="11" r="10" fill="#C6F432"/>
+    <circle cx="23" cy="11" r="10" fill="#A99BFF" fill-opacity=".85"/>
+  </g>
+  <text x="86" y="340" font-family="Space Grotesk" font-weight="700" font-size="118" letter-spacing="-4" fill="#F4F5F8">Tandem</text>
+  <text x="92" y="400" font-family="Inter" font-weight="400" font-size="34" fill="#A3A6B3">Shared to-do lists for two.</text>
+
+  <g transform="translate(92 470)">
+    <circle cx="22" cy="22" r="22" fill="#7DD3FC"/>
+    <circle cx="54" cy="22" r="22" fill="#FFB86B" stroke="#0E0F13" stroke-width="4"/>
+    <text x="22" y="29.5" text-anchor="middle" font-family="Inter" font-weight="600" font-size="20" fill="#0E0F13">A</text>
+    <text x="54" y="29.5" text-anchor="middle" font-family="Inter" font-weight="600" font-size="20" fill="#0E0F13">B</text>
+    <text x="96" y="30" font-family="Inter" font-weight="500" font-size="22" fill="#C9CBD4">Private by default. Shared when you want.</text>
+  </g>
+
+  <!-- Right: back card (depth) -->
+  <g transform="rotate(5 900 330)">
+    <rect x="672" y="96" width="452" height="440" rx="26" fill="#1E1B33" stroke="#3A3466" stroke-width="2" opacity=".9"/>
+  </g>
+
+  <!-- Right: list card -->
+  <g transform="rotate(-3 880 320)" filter="url(#shadow)">
+    <rect x="652" y="92" width="460" height="452" rx="26" fill="#17181F" stroke="url(#cardEdge)" stroke-width="2"/>
+
+    <!-- header -->
+    <circle cx="694" cy="146" r="9" fill="#9BE15D"/>
+    <text x="714" y="156" font-family="Space Grotesk" font-weight="500" font-size="30" fill="#F4F5F8">Groceries</text>
+    <rect x="928" y="128" width="148" height="36" rx="18" fill="#1E1B33" stroke="#3A3466" stroke-width="1.5"/>
+    <text x="1002" y="152" text-anchor="middle" font-family="Inter" font-weight="500" font-size="17" fill="#C9C0FF">You and Bob</text>
+
+    <line x1="676" y1="190" x2="1088" y2="190" stroke="#23252E" stroke-width="2"/>
+
+    <!-- row 1: done -->
+    <circle cx="698" cy="232" r="14" fill="#C6F432"/>
+    <path d="M691 232.5l5 5 9-10" fill="none" stroke="#0E0F13" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="726" y="240" font-family="Inter" font-weight="500" font-size="24" fill="#8B8E9B">Olive oil</text>
+    <line x1="726" y1="232" x2="818" y2="232" stroke="#8B8E9B" stroke-width="2"/>
+    <circle cx="1066" cy="232" r="16" fill="#7DD3FC"/>
+    <text x="1066" y="238" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#0E0F13">A</text>
+
+    <!-- row 2 -->
+    <circle cx="698" cy="306" r="13" fill="none" stroke="#4A4D5A" stroke-width="2.5"/>
+    <text x="726" y="314" font-family="Inter" font-weight="500" font-size="24" fill="#F4F5F8">Basil</text>
+    <circle cx="1066" cy="306" r="16" fill="#FFB86B"/>
+    <text x="1066" y="312" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#0E0F13">B</text>
+
+    <!-- row 3: due -->
+    <circle cx="698" cy="380" r="13" fill="none" stroke="#4A4D5A" stroke-width="2.5"/>
+    <text x="726" y="388" font-family="Inter" font-weight="500" font-size="24" fill="#F4F5F8">Book the train</text>
+    <rect x="904" y="364" width="62" height="32" rx="10" fill="#33251A"/>
+    <text x="935" y="386" text-anchor="middle" font-family="Inter" font-weight="600" font-size="16" fill="#FFC58A">Fri</text>
+    <circle cx="1066" cy="380" r="16" fill="#7DD3FC"/>
+    <text x="1066" y="386" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#0E0F13">A</text>
+
+    <!-- row 4 -->
+    <circle cx="698" cy="454" r="13" fill="none" stroke="#4A4D5A" stroke-width="2.5"/>
+    <text x="726" y="462" font-family="Inter" font-weight="500" font-size="24" fill="#F4F5F8">Fresh bread</text>
+    <circle cx="1066" cy="454" r="16" fill="#FFB86B"/>
+    <text x="1066" y="460" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#0E0F13">B</text>
+
+    <!-- progress -->
+    <rect x="676" y="506" width="412" height="8" rx="4" fill="#262833"/>
+    <rect x="676" y="506" width="103" height="8" rx="4" fill="#C6F432"/>
+  </g>
+</svg>

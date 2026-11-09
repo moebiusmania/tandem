@@ -1,4 +1,4 @@
-import type { FC, PropsWithChildren } from "hono/jsx";
+import { createContext, useContext, type FC, type PropsWithChildren } from "hono/jsx";
 import { MoonIcon, SunIcon } from "./icons";
 
 /** htmx hardened for a strict CSP: no eval, no inline styles, no script execution, no history snapshots. */
@@ -18,6 +18,32 @@ export const HTMX_CONFIG = JSON.stringify({
   attributesToSettle: ["class", "width", "height"],
 });
 
+/** Absolute origin (scheme + host) the page is served on, for social-share meta tags. Set by `render`. */
+export const PublicOrigin = createContext("");
+
+const DESCRIPTION = "Shared to-do lists for two.";
+
+/** Open Graph / Twitter card tags; crawlers need an absolute image URL. */
+const ShareMeta: FC = () => {
+  const image = `${useContext(PublicOrigin)}/static/og.png`;
+  return (
+    <>
+      <meta name="description" content={DESCRIPTION} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Tandem" />
+      <meta property="og:title" content="Tandem" />
+      <meta property="og:description" content={DESCRIPTION} />
+      <meta property="og:image" content={image} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Tandem: a shared grocery list with tasks assigned to two people" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:image" content={image} />
+    </>
+  );
+};
+
 export const Layout: FC<PropsWithChildren<{ title: string; theme: "dark" | "light"; page: string }>> = ({
   title,
   theme,
@@ -34,6 +60,7 @@ export const Layout: FC<PropsWithChildren<{ title: string; theme: "dark" | "ligh
       <meta name="theme-color" content={theme === "dark" ? "#0E0F13" : "#F5F5F0"} />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-title" content="Tandem" />
+      <ShareMeta />
       <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
       <link rel="icon" href="/static/icons/icon.svg" type="image/svg+xml" />
       <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png" />

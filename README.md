@@ -1,5 +1,7 @@
 # Tandem
 
+![Tandem: shared to-do lists for two](public/og.png)
+
 Shared to-do lists for two people. Built with **Bun**, **Hono** (server-side JSX), **SQLite** (`bun:sqlite`),
 **htmx** (boosted links and forms, so pages update without full reloads) and **Alpine.js** (the CSP build, for small bits of UI state).
 Styling is vanilla CSS: cascade layers, nesting, container queries, `:has()`, `color-mix()`, `@starting-style`
@@ -54,6 +56,11 @@ bun run user:create alice --reset          # new password, signs out all session
 The favicon (`favicon.ico` + SVG), PWA icons (192, 512, maskable 512) and the iOS home-screen icon are all
 drawn from the logo by `bun run icons`, which writes `public/icons/`. It needs no image tools.
 The web app manifest is `public/manifest.webmanifest`.
+
+The hero image above is also the social-share card (`og:image` / `twitter:image`, 1200×630). Its source is
+`scripts/og-image.svg`; render it to `public/og.png` with any SVG rasterizer that has Space Grotesk and Inter
+installed (e.g. `resvg scripts/og-image.svg public/og.png`). Link previews need an absolute image URL, so the
+page uses the first `ALLOWED_ORIGINS` entry (the public URL) and falls back to the request origin.
 
 ## Tests
 

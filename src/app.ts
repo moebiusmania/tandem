@@ -24,6 +24,12 @@ export function createApp(deps: Deps, opts: { staticRoot?: string } = {}): Hono<
     c.set("deps", deps);
     await next();
   });
+  // The social-share image is public and meant to be embedded by other sites (link previews).
+  // Registered before securityHeaders so it runs after it and overrides its same-origin CORP.
+  app.use("/static/og.png", async (c, next) => {
+    await next();
+    c.header("Cross-Origin-Resource-Policy", "cross-origin");
+  });
   app.use("*", securityHeaders(deps.config.hsts));
   app.use(
     "*",
